@@ -1,4 +1,4 @@
-exp2flux <- function(model,expression,missing="max"){
+exp2flux <- function(model,expression,missing="max",scale=FALSE){
   gpr.expression <- function(gpr,expression,missing){
     gpr <- gsub("[()]","",gpr)
     gpr <- gsub("[[:space:]]","",gpr)
@@ -14,12 +14,14 @@ exp2flux <- function(model,expression,missing="max"){
     })
     exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
     exp[exp==0]<-NA
-    exp <- round((exp/max(exp)),6)*1000
+    if(scale==TRUE){
+      exp <- round((exp/max(exp,na.rm = TRUE)),6)*1000
+    }
     exp[is.na(exp)] <- as.vector(summary(exp)[match(missing,c("min","1q","median","mean","3q","max"))])
     return(exp)
   }
   exp <- gpr.expression(model@gpr,expression,missing=missing)
-  exp[model@react_id%in%findExchReact(model)@react_id] <- 1000
+  exp[model@react_id%in%findExchReact(model)@react_id] <- abs(model@lowbnd[model@react_id%in%findExchReact(model)@react_id])
   model@lowbnd <- -1*exp
   model@lowbnd[!model@react_rev] <- 0
   model@uppbnd <- exp
