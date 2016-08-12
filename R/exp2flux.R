@@ -5,7 +5,12 @@ exp2flux <- function(model,expression,missing="max"){
     complex <- lapply(gpr, function(gpr){unlist(strsplit(gpr,"or"))})
     genes <- lapply(complex, function(complex){strsplit(complex,"and")})
     min.complex <- lapply(genes, function(gene){
-      lapply(gene, function(gene){min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[unlist(gene)],na.rm = TRUE)})
+      lapply(gene, function(gene){
+        gExp <- rowMeans(expression@assayData$exprs,na.rm = TRUE)[unlist(gene)]
+        if(identical(rep(TRUE,length(gExp)),as.vector(is.na(gExp)))){
+          gExp <- 0
+        }
+        min(gExp,na.rm = TRUE)})
     })
     exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
     exp[exp==0]<-NA
