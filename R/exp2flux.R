@@ -14,8 +14,8 @@ exp2flux <- function(model,expression,missing="max"){
     })
     exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
     exp[exp==0]<-NA
-    exp[is.na(exp)] <- as.vector(summary(exp)[match(missing,c("min","1q","median","mean","3q","max"))])
     exp <- round((exp/max(exp)),6)*1000
+    exp[is.na(exp)] <- as.vector(summary(exp)[match(missing,c("min","1q","median","mean","3q","max"))])
     return(exp)
   }
   exp <- gpr.expression(model@gpr,expression,missing=missing)
