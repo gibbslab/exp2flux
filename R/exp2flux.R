@@ -5,7 +5,7 @@ exp2flux <- function(model,expression,missing="max"){
     complex <- lapply(gpr, function(gpr){unlist(strsplit(gpr,"or"))})
     genes <- lapply(complex, function(complex){strsplit(complex,"and")})
     min.complex <- lapply(genes, function(gene){
-      lapply(gene, function(gene){min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[unlist(gene)])})
+      lapply(gene, function(gene){min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[unlist(gene)],na.rm = TRUE)})
     })
     exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
     exp[exp==0]<-NA
@@ -13,9 +13,3 @@ exp2flux <- function(model,expression,missing="max"){
     exp <- round((exp/max(exp)),6)*1000
     return(exp)
   }
-  exp <- gpr.expression(model@gpr,expression,missing = missing)
-  model@lowbnd <- -1*exp
-  model@lowbnd[!model@react_rev] <- 0
-  model@uppbnd <- exp
-  return(model)
-}
