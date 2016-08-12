@@ -19,8 +19,12 @@ exp2flux <- function(model,expression,missing="max"){
     return(exp)
   }
   exp <- gpr.expression(model@gpr,expression,missing=missing)
+  exp[model@react_id%in%findExchReact(model)@react_id] <- 1000
   model@lowbnd <- -1*exp
   model@lowbnd[!model@react_rev] <- 0
   model@uppbnd <- exp
   return(model)
 }
+
+
+
