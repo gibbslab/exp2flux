@@ -1,3 +1,4 @@
+#' @export exp2flux
 exp2flux <- function(model,expression,missing="max",scale=FALSE){
   gpr.expression <- function(gpr,expression,missing){
     gpr <- gsub("[()]","",gpr)

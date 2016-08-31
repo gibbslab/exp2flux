@@ -1,4 +1,5 @@
-flux.differences <- function(model1,model2,fold=2){
+#' @export fluxDifferences
+fluxDifferences <- function(model1,model2,fold=2){
   f_m1 <- getFluxDist(optimizeProb(model1))
   f_m2 <- getFluxDist(optimizeProb(model2))
   if(identical(length(f_m1),length(f_m2))){

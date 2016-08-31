@@ -1,9 +1,11 @@
-Package: ex2flux
+Package: exp2flux
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: Who to complain to <yourfault@somewhere.net>
-Description: More about what it does (maybe more than one line)
-License: What license is it under?
+Title: Convert Gene Expression Data to FBA fluxes
+Version: 0.1
+Author: Kelly Botero[aut,cre], Daniel Osorio[aut,cre], Janneth Gonzalez[aut],
+    Andrés Pinzón[aut]
+Maintainer: Daniel Osorio <dcosorioh@unal.edu.co>
+Description: Convert Gene Expression Data to FBA fluxes
+License: GPL2
 LazyData: TRUE
+RoxygenNote: 5.0.1
