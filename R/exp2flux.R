@@ -18,7 +18,7 @@
 #' optimizeProb(Ec_core)
 #' 
 #' # Random Data
-#' gE <- ExpressionSet(matrix(runif(50,1,100),dimnames = list(sample(Ec_core@allGenes,50),c())))
+#' gE <- ExpressionSet(matrix(runif(100,1,100),dimnames = list(sample(Ec_core@allGenes,100),c())))
 #' 
 #' # Applying the function
 #' modifiedModel <- exp2flux(model = Ec_core,expression = gE,missing = "gmean",scale = TRUE)
