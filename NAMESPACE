@@ -2,3 +2,6 @@
 
 export(exp2flux)
 export(fluxDifferences)
+importFrom(sybil,findExchReact)
+importFrom(sybil,getFluxDist)
+importFrom(sybil,optimizeProb)
