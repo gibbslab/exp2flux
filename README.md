@@ -24,4 +24,4 @@ Available functions:
 
 Citation
 --------
-Kelly Botero, Daniel Osorio, Janneth Gonzalez and Andres Pinzon-Velasco (2016). **exp2flux: convert EXPression data to FBA FLUXes**. R package version 0.1.
+Daniel Osorio, Kelly Botero, Janneth Gonzalez and Andres Pinzon-Velasco (2016). **exp2flux: convert EXPression data to FBA FLUXes**. R package version 0.1.
