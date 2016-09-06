@@ -26,11 +26,7 @@
 #' # Result
 #' optimizeProb(modifiedModel)
 #' }
-exp2flux <- function(model,expression,missing="gmean",scale=FALSE){
-  # This function was written by Paul McMurdie @ http://stackoverflow.com/questions/2602583/geometric-mean-is-there-a-built-in
-  gm_mean = function(x, na.rm=TRUE){
-    exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
-  }
+exp2flux <- function(model,expression,missing="mean",scale=FALSE){
   gpr.expression <- function(gpr,expression,missing){
     gpr <- gsub("[()]","",gpr)
     gpr <- gsub("[[:space:]]","",gpr)
@@ -46,11 +42,7 @@ exp2flux <- function(model,expression,missing="gmean",scale=FALSE){
     })
     exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
     exp[exp==0] <- NA
-    if(missing == "gmean"){
-     exp[is.na(exp)] <- gm_mean(exp,na.rm = TRUE)
-    } else {
-      exp[is.na(exp)] <- summary(exp)[match(missing,c("min","1q","median","mean","3q","max"))]
-    }
+    exp[is.na(exp)] <- summary(exp[!exp %in% boxplot.stats(exp)$out])[match(missing,c("min","1q","median","mean","3q","max"))]
     return(exp)
   }
   exp <- gpr.expression(model@gpr,expression,missing=missing)
