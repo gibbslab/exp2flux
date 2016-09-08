@@ -7,25 +7,6 @@
 #' @param expression A valid ExpressionSet object (one by treatment)
 #' @param missing A character string specifying the value to be used in missing cases; must be one of \code{'gmean'}, \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'}
 #' @param scale A boolean value to specify if data must be scaled
-#' @examples 
-#' \dontrun{
-#' # Required Libraries
-#' library("sybil")
-#' library("Biobase")
-#' 
-#' # Reference Data
-#' data("Ec_core")
-#' optimizeProb(Ec_core)
-#' 
-#' # Random Data
-#' gE <- ExpressionSet(matrix(runif(100,1,100),dimnames = list(sample(Ec_core@allGenes,100),c())))
-#' 
-#' # Applying the function
-#' modifiedModel <- exp2flux(model = Ec_core,expression = gE,missing = "gmean",scale = TRUE)
-#' 
-#' # Result
-#' optimizeProb(modifiedModel)
-#' }
 exp2flux <- function(model,expression,organism,typeID="kegg",missing="mean",scale=FALSE){
   data <- try(kegg.gsets(species = organism, id.type = typeID))
   data <- matrix(gsub("[[:digit:]]+$","",names(unlist(data))),dimnames = list(as.vector(unlist(data)),c()))
@@ -42,7 +23,7 @@ exp2flux <- function(model,expression,organism,typeID="kegg",missing="mean",scal
           gene <- gene[gene%in%rownames(data)]
         }
         if (length(gene)==0){
-          minComplex <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE))[[match(missing,c("min","1q","median","mean","3q","max"))]]
+          minComplex <- NA
         } else {
           if(any(gene%in%rownames(expression@assayData$exprs))){
             minComplex <- min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[gene],na.rm = TRUE)
@@ -54,6 +35,7 @@ exp2flux <- function(model,expression,organism,typeID="kegg",missing="mean",scal
       })
     })
     exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
+    exp[exp==0] <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE))[[match(missing,c("min","1q","median","mean","3q","max"))]]
     return(exp)
   }
   exp <- gpr.expression(model@gpr,expression,missing=missing)
