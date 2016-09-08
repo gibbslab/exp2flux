@@ -26,23 +26,34 @@
 #' # Result
 #' optimizeProb(modifiedModel)
 #' }
-exp2flux <- function(model,expression,missing="mean",scale=FALSE){
+exp2flux <- function(model,expression,organism,typeID="kegg",missing="mean",scale=FALSE){
+  data <- try(kegg.gsets(species = organism, id.type = typeID))
+  data <- matrix(gsub("[[:digit:]]+$","",names(unlist(data))),dimnames = list(as.vector(unlist(data)),c()))
   gpr.expression <- function(gpr,expression,missing){
     gpr <- gsub("[()]","",gpr)
     gpr <- gsub("[[:space:]]","",gpr)
     complex <- lapply(gpr, function(gpr){unlist(strsplit(gpr,"or"))})
     genes <- lapply(complex, function(complex){strsplit(complex,"and")})
+    genes[lengths(genes) == 0] <- NA
     min.complex <- lapply(genes, function(gene){
       lapply(gene, function(gene){
-        gExp <- rowMeans(expression@assayData$exprs,na.rm = TRUE)[unlist(gene)]
-        if(all(is.na(gExp))){
-          gExp <- 0
+        gene <- unlist(gene)
+        if(!all(gene%in%rownames(data))){
+          gene <- gene[gene%in%rownames(data)]
         }
-        return(min(gExp,na.rm = TRUE))})
+        if (length(gene)==0){
+          minComplex <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE))[[match(missing,c("min","1q","median","mean","3q","max"))]]
+        } else {
+          if(any(gene%in%rownames(expression@assayData$exprs))){
+            minComplex <- min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[gene],na.rm = TRUE)
+          } else {
+            minComplex <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE)[names(data[data[,1]%in%unique(data[gene,]),])])[[match(missing,c("min","1q","median","mean","3q","max"))]]
+          }
+        }
+        return(minComplex)
+      })
     })
     exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
-    exp[exp==0] <- NA
-    exp[is.na(exp)] <- summary(exp[!exp %in% boxplot.stats(exp)$out])[match(missing,c("min","1q","median","mean","3q","max"))]
     return(exp)
   }
   exp <- gpr.expression(model@gpr,expression,missing=missing)
@@ -58,6 +69,3 @@ exp2flux <- function(model,expression,missing="mean",scale=FALSE){
   model@uppbnd[model@react_id%in%findExchReact(model)@react_id] <- ub[model@react_id%in%findExchReact(model)@react_id]
   return(model)
 }
-
-
-
