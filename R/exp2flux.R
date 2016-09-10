@@ -23,7 +23,7 @@ exp2flux <- function(model,expression,organism,typeID="kegg",missing="mean",scal
           gene <- gene[gene%in%rownames(data)]
         }
         if (length(gene)==0){
-          minComplex <- NA
+          minComplex <- 0
         } else {
           if(any(gene%in%rownames(expression@assayData$exprs))){
             minComplex <- min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[gene],na.rm = TRUE)
