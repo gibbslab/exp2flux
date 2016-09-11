@@ -7,7 +7,7 @@
 #' @param expression A valid ExpressionSet object (one by treatment)
 #' @param missing A character string specifying the value to be used in missing cases; must be one of \code{'gmean'}, \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'}
 #' @param scale A boolean value to specify if data must be scaled
-exp2flux <- function(model,expression,organism,typeID="kegg",missing="mean",scale=FALSE){
+exp2flux <- function(model,expression,organism,typeID="kegg",missing="median",scale=FALSE){
   data <- try(kegg.gsets(species = organism, id.type = typeID))
   data <- matrix(gsub("[[:digit:]]+$","",names(unlist(data))),dimnames = list(as.vector(unlist(data)),c()))
   gpr.expression <- function(gpr,expression,missing){
