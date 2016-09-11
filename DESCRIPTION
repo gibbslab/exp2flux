@@ -7,6 +7,6 @@ Author: Kelly Botero[aut,cre], Daniel Osorio[aut,cre], Janneth Gonzalez[aut],
 Maintainer: Daniel Osorio <dcosorioh@unal.edu.co>
 Description: Convert Gene Expression Data to FBA fluxes
 License: GPL-2
-Imports: sybil gage
+Imports: sybil, gage
 LazyData: TRUE
 RoxygenNote: 5.0.1
