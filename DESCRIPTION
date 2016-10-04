@@ -2,7 +2,7 @@ Package: exp2flux
 Type: Package
 Title: Convert Gene Expression Data to FBA fluxes
 Version: 0.1
-Author: Kelly Botero[aut,cre], Daniel Osorio[aut,cre], Janneth Gonzalez[aut],
+Author: Daniel Osorio[aut,cre], Kelly Botero[aut,cre], Janneth Gonzalez[aut],
     Andrés Pinzón[aut]
 Maintainer: Daniel Osorio <dcosorioh@unal.edu.co>
 Description: Convert Gene Expression Data to FBA fluxes
