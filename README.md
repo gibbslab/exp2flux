@@ -11,8 +11,8 @@ For install the latest stable version this package directly from GitHub:
 install.packages("devtools")
 
 # Install 'minval' package
-devtools::install_github("gibbslab/g2f")
-library("g2f")
+devtools::install_github("gibbslab/exp2flux")
+library("exp2flux")
 ```
 
 Available functions:
