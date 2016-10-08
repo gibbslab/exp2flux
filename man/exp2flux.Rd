@@ -5,12 +5,16 @@
 \title{Convert Gene Expression Data to FBA fluxes}
 \usage{
 exp2flux(model, expression, organism = NULL, typeID = NULL,
-  missing = "mean", scale = FALSE)
+  missing = "mean", scale = TRUE)
 }
 \arguments{
 \item{model}{A valid model for the \code{'sybil'} package}
 
 \item{expression}{A valid ExpressionSet object (one by treatment)}
+
+\item{organism}{}
+
+\item{typeID}{}
 
 \item{missing}{A character string specifying the value to be used in missing cases; must be one of \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'}}
 

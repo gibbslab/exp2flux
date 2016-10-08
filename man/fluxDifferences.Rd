@@ -2,17 +2,19 @@
 % Please edit documentation in R/fluxDifferences.R
 \name{fluxDifferences}
 \alias{fluxDifferences}
-\title{Report the fold change of fluxes between two models}
+\title{Report the fold change \code{(fluxM2/fluxM1)-1} of fluxes between two models}
 \usage{
 fluxDifferences(model1, model2, foldReport = 2)
 }
 \examples{
 \dontrun{
 # Loading a model
+library("sybil")
+library("Biobase")
 data("Ec_core")
 
 # Generating expressionSets
-expressionData <- matrix(data = runif(3*length(Ec_core@allGenes),min = 1,max = 10),
+expressionData <- matrix(data = runif(3*length(Ec_core@allGenes),min = 1,max = 100),
                          nrow = length(Ec_core@allGenes),
                          dimnames = list(c(Ec_core@allGenes),c()))
 expressionData <- ExpressionSet(assayData = expressionData)
@@ -20,8 +22,7 @@ expressionData <- ExpressionSet(assayData = expressionData)
 # Applying exp2flux
 Ec_coreGE <- exp2flux(model = Ec_core,
                       expression = expressionData,
-                      missing = "median",
-                      scale = TRUE)
+                      missing = "median")
 
 # Evaluating Differences
 fluxDifferences(model1 = Ec_core, 

@@ -1,15 +1,17 @@
 #' @export fluxDifferences
 #' @importFrom "sybil" "getFluxDist" "optimizeProb"
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
-#' @title Report the fold change of fluxes between two models
+#' @title Report the fold change \code{(fluxM2/fluxM1)-1} of fluxes between two models
 #' 
 #' @examples
 #' \dontrun{
 #' # Loading a model
+#' library("sybil")
+#' library("Biobase")
 #' data("Ec_core")
 #' 
 #' # Generating expressionSets
-#' expressionData <- matrix(data = runif(3*length(Ec_core@allGenes),min = 1,max = 10),
+#' expressionData <- matrix(data = runif(3*length(Ec_core@allGenes),min = 1,max = 100),
 #'                          nrow = length(Ec_core@allGenes),
 #'                          dimnames = list(c(Ec_core@allGenes),c()))
 #' expressionData <- ExpressionSet(assayData = expressionData)
@@ -17,8 +19,7 @@
 #' # Applying exp2flux
 #' Ec_coreGE <- exp2flux(model = Ec_core,
 #'                       expression = expressionData,
-#'                       missing = "median",
-#'                       scale = TRUE)
+#'                       missing = "median")
 #' 
 #' # Evaluating Differences
 #' fluxDifferences(model1 = Ec_core, 
@@ -35,11 +36,11 @@ fluxDifferences <- function(model1,model2,foldReport=2){
     fold[is.na(fold)] <- 0
     fold[is.infinite(fold)] <- 0
     different <- (abs(fold)>=foldReport)
-    different <-as.data.frame.array(cbind(model1@react_id[different],f_m1[different],f_m2[different],round(fold[different],2)))
-    colnames(different) <- c("Reaction","fluxModel1","fluxModel2","foldChange")
-    return(as.data.frame(different))
+    differentFlux <- matrix(cbind(f_m1,f_m2,fold),nrow = model1@react_num,dimnames = list(model1@react_id,c("fluxModel1","fluxModel2","foldChange")))
+    differentFlux <- differentFlux[different,]
+    return(differentFlux)
   } 
   else {
-    warning("Models are not the same")
+    warning("Metabolic models must be the same with different restrictions")
   }
 }
