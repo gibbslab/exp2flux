@@ -2,6 +2,26 @@
 #' @importFrom sybil getFluxDist optimizeProb
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Report the fold change of fluxes between two models
+#' 
+#' @examples
+#' # Loading a model
+#' data("Ec_core")
+#' 
+#' # Generating expressionSets
+#' expressionData <- matrix(data = runif(5*length(Ec_core@allGenes),min = 0,max = 100),
+#'                          nrow = length(Ec_core@allGenes),
+#'                          dimnames = list(c(Ec_core@allGenes),c()))
+#' expressionData <- ExpressionSet(assayData = expressionData)
+#' 
+#' # Applying exp2flux
+#' Ec_coreGE <- exp2flux(model = Ec_core,
+#'                       expression = expressionData)
+#' 
+#' # Evaluating Differences
+#' fluxDifferences(model1 = Ec_core, 
+#'                 model2 = Ec_coreGE, 
+#'                 foldReport = 0.5)
+
 fluxDifferences <- function(model1,model2,foldReport=2){
   f_m1 <- getFluxDist(optimizeProb(model1))
   f_m2 <- getFluxDist(optimizeProb(model2))
