@@ -1,18 +1,18 @@
 #' @export exp2flux
 #' @importFrom "sybil" "findExchReact"
 #' @importFrom "gage" "kegg.gsets"
-#' @author Kelly Botero <kjboteroo@unal.edu.co> - Maintainer: Daniel Camilo Osorio <dcosorioh@unal.edu.co>
+#' @author Kelly Botero <kjboteroo@unal.edu.co> and Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Convert Gene Expression Data to FBA fluxes
-#' @param model A valid model for the \code{'sybil'} package
-#' @param expression A valid ExpressionSet object (one by treatment)
-#' @param organism 
-#' @param typeID 
+#' @param model A valid model for the \code{'sybil'} package.
+#' @param expression A valid ExpressionSet object (one by treatment).
+#' @param organism  A valid organism identifier for the KEGG database. List of valid organism identifiers are available in: http://rest.kegg.jp/list/organism.
+#' @param typeID A string to define the type of ID used in GPR's. One of \code{"entrez"} or \code{"kegg"} must be given.
 #' @param missing A character string specifying the value to be used in missing cases; must be one of \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'}
 #' @param scale A boolean value to specify if data must be scaled
 exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",scale=TRUE){
   if(!is.null(organism) && !is.null(typeID)){
     data <- try(kegg.gsets(species = organism, id.type = typeID)) 
-    data <- matrix(gsub("[[:digit:]]+$","",names(unlist(data))),dimnames = list(as.vector(unlist(data)),c()))
+    data <- matrix(gsub("[[:digit:]]+$","",names(unlist(data$kg.sets))),dimnames = list(as.vector(unlist(data$kg.sets)),c()))
   }
   gpr.expression <- function(gpr,expression,missing){
     gpr <- gsub("[()]","",gpr)

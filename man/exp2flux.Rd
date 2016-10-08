@@ -8,19 +8,19 @@ exp2flux(model, expression, organism = NULL, typeID = NULL,
   missing = "mean", scale = TRUE)
 }
 \arguments{
-\item{model}{A valid model for the \code{'sybil'} package}
+\item{model}{A valid model for the \code{'sybil'} package.}
 
-\item{expression}{A valid ExpressionSet object (one by treatment)}
+\item{expression}{A valid ExpressionSet object (one by treatment).}
 
-\item{organism}{}
+\item{organism}{A valid organism identifier for the KEGG database. List of valid organism identifiers are available in: http://rest.kegg.jp/list/organism.}
 
-\item{typeID}{}
+\item{typeID}{A string to define the type of ID used in GPR's. One of \code{"entrez"} or \code{"kegg"} must be given.}
 
 \item{missing}{A character string specifying the value to be used in missing cases; must be one of \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'}}
 
 \item{scale}{A boolean value to specify if data must be scaled}
 }
 \author{
-Kelly Botero <kjboteroo@unal.edu.co> - Maintainer: Daniel Camilo Osorio <dcosorioh@unal.edu.co>
+Kelly Botero <kjboteroo@unal.edu.co> and Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 }
 
