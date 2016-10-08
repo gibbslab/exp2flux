@@ -1,6 +1,6 @@
 #' @export fluxDifferences
 #' @importFrom sybil getFluxDist optimizeProb
-#' @author Daniel Camilo Osorio Hurtado <dcosorioh@unal.edu.co>
+#' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Report the fold change of fluxes between two models
 fluxDifferences <- function(model1,model2,foldReport=2){
   f_m1 <- getFluxDist(optimizeProb(model1))

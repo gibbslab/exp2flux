@@ -1,11 +1,10 @@
 #' @export exp2flux
 #' @importFrom sybil findExchReact
-#' @author Kelly Botero <kjboteroo@unal.edu.co> - 
-#' Maintainer: Daniel Camilo Osorio Hurtado <dcosorioh@unal.edu.co>
+#' @author Kelly Botero <kjboteroo@unal.edu.co> - Maintainer: Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Convert Gene Expression Data to FBA fluxes
 #' @param model A valid model for the \code{'sybil'} package
 #' @param expression A valid ExpressionSet object (one by treatment)
-#' @param missing A character string specifying the value to be used in missing cases; must be one of \code{'gmean'}, \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'}
+#' @param missing A character string specifying the value to be used in missing cases; must be one of \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'}
 #' @param scale A boolean value to specify if data must be scaled
 exp2flux <- function(model,expression,organism,typeID="kegg",missing="median",scale=FALSE){
   data <- try(kegg.gsets(species = organism, id.type = typeID))
