@@ -9,7 +9,7 @@
 #' data("Ec_core")
 #' 
 #' # Generating expressionSets
-#' expressionData <- matrix(data = runif(3*length(Ec_core@allGenes),min = 1,max = 100),
+#' expressionData <- matrix(data = runif(3*length(Ec_core@allGenes),min = 1,max = 10),
 #'                          nrow = length(Ec_core@allGenes),
 #'                          dimnames = list(c(Ec_core@allGenes),c()))
 #' expressionData <- ExpressionSet(assayData = expressionData)
@@ -17,12 +17,13 @@
 #' # Applying exp2flux
 #' Ec_coreGE <- exp2flux(model = Ec_core,
 #'                       expression = expressionData,
-#'                       missing = "median")
+#'                       missing = "median",
+#'                       scale = TRUE)
 #' 
 #' # Evaluating Differences
 #' fluxDifferences(model1 = Ec_core, 
 #'                 model2 = Ec_coreGE, 
-#'                 foldReport = 0)
+#'                 foldReport = 0.5)
 #'                 }
 
 fluxDifferences <- function(model1,model2,foldReport=2){

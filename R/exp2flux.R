@@ -21,8 +21,11 @@ exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",s
     min.complex <- lapply(genes, function(gene){
       lapply(gene, function(gene){
         gene <- unlist(gene)
+        if(!is.null(organism) && !is.null(typeID)){
         if(!all(gene%in%rownames(data))){
           gene <- gene[gene%in%rownames(data)]
+        }} else {
+          gene <- gene[gene%in%rownames(expression@assayData$exprs)]
         }
         if (length(gene)==0){
           minComplex <- 0
@@ -44,7 +47,9 @@ exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",s
     exp[exp==0] <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE))[[match(missing,c("min","1q","median","mean","3q","max"))]]
     return(exp)
   }
-  exp <- gpr.expression(model@gpr,expression,missing=missing)
+  exp <- gpr.expression(gpr = model@gpr,
+                        expression = expression,
+                        missing=missing)
   if(scale==TRUE){
     exp <- round((exp/max(exp,na.rm = TRUE)),6)*1000
   }
