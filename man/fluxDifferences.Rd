@@ -4,9 +4,30 @@
 \alias{fluxDifferences}
 \title{Report the fold change of fluxes between two models}
 \usage{
-fluxDifferences(model1, model2, fold2report = 2)
+fluxDifferences(model1, model2, foldReport = 2)
+}
+\examples{
+\dontrun{
+# Loading a model
+data("Ec_core")
+
+# Generating expressionSets
+expressionData <- matrix(data = runif(5*length(Ec_core@allGenes),min = 0,max = 100),
+                         nrow = length(Ec_core@allGenes),
+                         dimnames = list(c(Ec_core@allGenes),c()))
+expressionData <- ExpressionSet(assayData = expressionData)
+
+# Applying exp2flux
+Ec_coreGE <- exp2flux(model = Ec_core,
+                      expression = expressionData)
+
+# Evaluating Differences
+fluxDifferences(model1 = Ec_core, 
+                model2 = Ec_coreGE, 
+                foldReport = 0.5)
+                }
 }
 \author{
-Daniel Camilo Osorio Hurtado <dcosorioh@unal.edu.co>
+Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 }
 

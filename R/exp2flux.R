@@ -1,5 +1,6 @@
 #' @export exp2flux
-#' @importFrom sybil findExchReact
+#' @importFrom "sybil" "findExchReact"
+#' @importFrom "gage" "kegg.gsets"
 #' @author Kelly Botero <kjboteroo@unal.edu.co> - Maintainer: Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Convert Gene Expression Data to FBA fluxes
 #' @param model A valid model for the \code{'sybil'} package
@@ -29,7 +30,11 @@ exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",s
           if(any(gene%in%rownames(expression@assayData$exprs))){
             minComplex <- min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[gene],na.rm = TRUE)
           } else {
-            minComplex <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE)[names(data[data[,1]%in%names(sort(table(data[gene,]))[1]),])])[[match(missing,c("min","1q","median","mean","3q","max"))]]
+            if(!is.null(organism) && !is.null(typeID)){
+              minComplex <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE)[names(data[data[,1]%in%names(sort(table(data[gene,]))[1]),])])[[match(missing,c("min","1q","median","mean","3q","max"))]]
+            } else {
+              minComplex <- 0
+            }
           }
         }
         return(minComplex)

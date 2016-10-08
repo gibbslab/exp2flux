@@ -3,10 +3,11 @@ Type: Package
 Title: Convert Gene Expression Data to FBA fluxes
 Version: 0.1
 Author: Daniel Osorio[aut,cre], Kelly Botero[aut,cre], Janneth Gonzalez[aut],
-    Andrés Pinzón[aut]
+    Andres Pinzon[aut]
 Maintainer: Daniel Osorio <dcosorioh@unal.edu.co>
 Description: Convert Gene Expression Data to FBA fluxes
 License: GPL-2
 Imports: sybil, gage
+Suggest: Biobase
 LazyData: TRUE
 RoxygenNote: 5.0.1

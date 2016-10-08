@@ -2,6 +2,7 @@
 
 export(exp2flux)
 export(fluxDifferences)
-importFrom(sybil,findExchReact)
-importFrom(sybil,getFluxDist)
-importFrom(sybil,optimizeProb)
+importFrom("gage","kegg.gsets")
+importFrom("sybil","findExchReact")
+importFrom("sybil","getFluxDist")
+importFrom("sybil","optimizeProb")
