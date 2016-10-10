@@ -2,7 +2,7 @@
 % Please edit documentation in R/exp2flux.R
 \name{exp2flux}
 \alias{exp2flux}
-\title{Convert Gene Expression Data to FBA fluxes based in GPR associations}
+\title{Convert Gene Expression Data to FBA fluxes}
 \usage{
 exp2flux(model, expression, organism = NULL, typeID = NULL,
   missing = "mean", scale = TRUE)
