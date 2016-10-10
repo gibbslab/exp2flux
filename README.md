@@ -1,4 +1,4 @@
-exp2flux : convert EXPression data to FBA FLUXes
+exp2flux : convert gene EXPression data to FBA FLUXes
 ======
 The **exp2flux** package was designed as a tool to convert EXPression data to FBA FLUXes.
 Install:

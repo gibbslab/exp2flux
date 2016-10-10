@@ -2,7 +2,7 @@
 % Please edit documentation in R/exp2flux.R
 \name{exp2flux}
 \alias{exp2flux}
-\title{Convert Gene Expression Data to FBA fluxes}
+\title{Convert Gene Expression Data to FBA fluxes based in GPR associations}
 \usage{
 exp2flux(model, expression, organism = NULL, typeID = NULL,
   missing = "mean", scale = TRUE)
@@ -29,8 +29,10 @@ This function calculates the flux boundaries for each reaction based in their as
 library("sybil")
 library("Biobase")
 
-#Original model:
+# Original model:
 data("Ec_core")
+
+# Original model evaluation:
 optimizeProb(Ec_core)
 
 # Generating simulated expressionSets
@@ -43,7 +45,7 @@ expressionData <- ExpressionSet(assayData = expressionData)
 Ec_coreGE <- exp2flux(model = Ec_core,
                       expression = expressionData,
                       missing = "mean")
-
+# Evaluating exp2flux model
 optimizeProb(Ec_coreGE)
                 }
 }
