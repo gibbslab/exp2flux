@@ -2,9 +2,12 @@
 % Please edit documentation in R/fluxDifferences.R
 \name{fluxDifferences}
 \alias{fluxDifferences}
-\title{Report the fold change \code{(fluxM2/fluxM1)-1} of fluxes between two models}
+\title{Report the fold change of fluxes between two models}
 \usage{
 fluxDifferences(model1, model2, foldReport = 2)
+}
+\description{
+This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models.
 }
 \examples{
 \dontrun{

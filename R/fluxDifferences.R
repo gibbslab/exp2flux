@@ -1,8 +1,8 @@
 #' @export fluxDifferences
 #' @importFrom "sybil" "getFluxDist" "optimizeProb"
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
-#' @title Report the fold change \code{(fluxM2/fluxM1)-1} of fluxes between two models
-#' 
+#' @title Report the fold change of fluxes between two models
+#' @description This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models.
 #' @examples
 #' \dontrun{
 #' # Loading a model
