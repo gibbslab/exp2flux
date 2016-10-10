@@ -19,7 +19,7 @@
 #' # Applying exp2flux
 #' Ec_coreGE <- exp2flux(model = Ec_core,
 #'                       expression = expressionData,
-#'                       missing = "median")
+#'                       missing = "mean")
 #' 
 #' # Evaluating Differences
 #' fluxDifferences(model1 = Ec_core, 
