@@ -21,6 +21,7 @@ Available functions:
 |:--------|:------------|
 |exp2flux|Convert Gene Expression Data to FBA fluxes|
 |fluxDifferences|Report the fold change of fluxes between two models|
+|plotDifferences|Plot the fold change of fluxes between two models into a bipartite graph|
 
 Citation
 --------
