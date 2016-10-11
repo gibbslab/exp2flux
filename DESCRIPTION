@@ -7,7 +7,7 @@ Author: Daniel Osorio[aut,cre], Kelly Botero[aut,cre], Janneth Gonzalez[aut],
 Maintainer: Daniel Osorio <dcosorioh@unal.edu.co>
 Description: For a given metabolic model with well formed Gene-Protein-Reaction (GPR) associations and their associated gene expression data, this package converts gene expression values to the FBA boundaries for each reaction based in the boolean rules described in its associated GPR.
 License: GPL-2
-Imports: sybil, gage
+Imports: sybil, gage, igraph
 Suggests: Biobase
 LazyData: TRUE
 RoxygenNote: 5.0.1
