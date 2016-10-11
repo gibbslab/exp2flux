@@ -3,6 +3,9 @@
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Report the fold change of fluxes between two models
 #' @description This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models.
+#' @param model1 A valid model for the \code{'sybil'} package.
+#' @param model2 A valid model for the \code{'sybil'} package. Must have the same reactions (reaction number and reaction identifiers) as \code{"model1"} with different restrictions.
+#' @param foldReport A threshold value to be reported. All reactions with a greater or equal fold change than the given threshold are reported.
 #' @examples
 #' \dontrun{
 #' # Loading a model
