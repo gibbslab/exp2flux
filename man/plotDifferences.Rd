@@ -14,7 +14,7 @@ plotDifferences(model1, model2, ...)
 \item{...}{Additional arguments affecting the plot}
 }
 \description{
-This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models and plot it into a bipartite graph. Vertex size is assigned proportional to the fold change; if fold change is positive, green color is assigned, in contrary case, red color is assigned.
+This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for the fluxes of two given metabolic models and plot it into a bipartite graph. Vertex size is assigned proportional to the fold change; if fold change is positive, green color is assigned, in contrary case, red color is assigned.
 }
 \examples{
 \dontrun{
@@ -42,4 +42,11 @@ plotDifferences(model1 = Ec_core,
 \author{
 Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 }
+\keyword{between}
+\keyword{differences}
+\keyword{flux}
+\keyword{model}
+\keyword{plot}
+\keyword{scenarios}
+\keyword{two}
 

@@ -2,7 +2,7 @@
 #' @importFrom "sybil" "getFluxDist" "optimizeProb"
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Report the fold change of fluxes between two models
-#' @description This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models.
+#' @description This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for the fluxes of two given metabolic models.
 #' @param model1 A valid model for the \code{'sybil'} package.
 #' @param model2 A valid model for the \code{'sybil'} package. Must have the same reactions (reaction number and reaction identifiers) as \code{"model1"} with different restrictions.
 #' @param foldReport A threshold value to be reported. All reactions with a greater or equal fold change than the given threshold are reported.
@@ -29,6 +29,7 @@
 #'                 model2 = Ec_coreGE, 
 #'                 foldReport = 0.5)
 #'                 }
+#' @keywords identify flux differences between two model scenarios
 
 fluxDifferences <- function(model1,model2,foldReport=2){
   f_m1 <- getFluxDist(optimizeProb(model1))

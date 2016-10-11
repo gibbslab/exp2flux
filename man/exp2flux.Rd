@@ -5,7 +5,7 @@
 \title{Convert gene expression data to FBA fluxes}
 \usage{
 exp2flux(model, expression, organism = NULL, typeID = NULL,
-  missing = "mean", scale = TRUE)
+  missing = "mean", scale = FALSE)
 }
 \arguments{
 \item{model}{A valid model for the \code{'sybil'} package.}
@@ -21,7 +21,13 @@ exp2flux(model, expression, organism = NULL, typeID = NULL,
 \item{scale}{A boolean value to specify if data must be scaled to assign a value of 1000 as max.}
 }
 \description{
-This function calculates the flux boundaries for each reaction based in their associated GPR. The value es obtained as follows: When two genes are associated by an \code{AND} operation according to the GPR rule, a \code{min} function is applied to their associated expression values. In the AND case, downregulated genes alter the reaction acting as enzyme formation limitant due two are required to complex formation. In turn, when the genes are associated by an \code{OR} rule, each one of then can code an entire enzyme to act as reaction catalyst. In this case, a \code{sum} function is applied for their associated expression values.To missing gene expression values, the function assigns one of: \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'} expression value calculated from the genes associated to the same metabolic pathway.In case of not possible pathway assignment to a gene, the value is calculated from all gene expression values. The fluxes boundaries of exchange reactions are not modified.
+This function calculates the flux boundaries for each reaction based in their associated GPR. 
+The value es obtained as follows: When two genes are associated by an \code{AND} operation according to the GPR rule, a \code{min} function is applied to their associated expression values. 
+In the \code{AND} case, downregulated genes alter the reaction acting as enzyme formation limitant due two are required to complex formation. 
+In turn, when the genes are associated by an \code{OR} rule, each one of then can code an entire enzyme to act as reaction catalyst. 
+In this case, a \code{sum} function is applied for their associated expression values.To missing gene expression values, the function assigns one of: \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'} expression value calculated from the genes associated to the same metabolic pathway.
+In case of not possible pathway assignment to a gene, the value is calculated from all gene expression values. 
+The fluxes boundaries of exchange reactions are not modified.
 }
 \examples{
 \dontrun{
@@ -50,6 +56,15 @@ optimizeProb(Ec_coreGE)
                 }
 }
 \author{
-Kelly Botero <kjboteroo@unal.edu.co> and Daniel Camilo Osorio <dcosorioh@unal.edu.co>
+Daniel Camilo Osorio <dcosorioh@unal.edu.co> and Kelly Botero <kjboteroo@unal.edu.co>
 }
+\keyword{data}
+\keyword{expression}
+\keyword{genome}
+\keyword{integrate}
+\keyword{metabolic}
+\keyword{network}
+\keyword{reconstruction}
+\keyword{scale}
+\keyword{tissue-specific}
 

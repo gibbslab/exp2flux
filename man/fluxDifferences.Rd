@@ -14,7 +14,7 @@ fluxDifferences(model1, model2, foldReport = 2)
 \item{foldReport}{A threshold value to be reported. All reactions with a greater or equal fold change than the given threshold are reported.}
 }
 \description{
-This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models.
+This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for the fluxes of two given metabolic models.
 }
 \examples{
 \dontrun{
@@ -43,4 +43,11 @@ fluxDifferences(model1 = Ec_core,
 \author{
 Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 }
+\keyword{between}
+\keyword{differences}
+\keyword{flux}
+\keyword{identify}
+\keyword{model}
+\keyword{scenarios}
+\keyword{two}
 

@@ -2,7 +2,7 @@
 #' @importFrom "igraph" "make_bipartite_graph" "V" "V<-" "layout.davidson.harel" "plot.igraph"
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
 #' @title Plot the fold change of fluxes between two models into a bipartite graph.
-#' @description This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models and plot it into a bipartite graph. Vertex size is assigned proportional to the fold change; if fold change is positive, green color is assigned, in contrary case, red color is assigned.
+#' @description This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for the fluxes of two given metabolic models and plot it into a bipartite graph. Vertex size is assigned proportional to the fold change; if fold change is positive, green color is assigned, in contrary case, red color is assigned.
 #' @param model1 A valid model for the \code{'sybil'} package.
 #' @param model2 A valid model for the \code{'sybil'} package. Must have the same reactions (reaction number and reaction identifiers) as \code{"model1"} with different restrictions.
 #' @param ... Additional arguments affecting the plot
@@ -28,6 +28,7 @@
 #' plotDifferences(model1 = Ec_core, 
 #'                 model2 = Ec_coreGE)
 #'                 }
+#' @keywords plot flux differences between two model scenarios
 plotDifferences <- function(model1,model2,...){
   S <- as.matrix(t(model1@S))
   colnames(S) <- model1@met_id
