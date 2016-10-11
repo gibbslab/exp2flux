@@ -34,7 +34,6 @@ plotDifferences <- function(model1,model2,...){
   vSizes <- types
   vSizes[types==1] <- (abs(fD$foldChange)/max(abs(fD$foldChange)))*20
   vSizes[types==0] <- 10
-  g <- simplify(g,count_multiple(g))
   topology <- layout_with_gem(g)
   plot.igraph(g,vertex.size=vSizes,vertex.label=names(types),edge.arrow.size=0.3)
   }
