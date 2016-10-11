@@ -2,6 +2,7 @@
 
 export(exp2flux)
 export(fluxDifferences)
+export(plotDifferences)
 importFrom("gage","kegg.gsets")
 importFrom("sybil","findExchReact")
 importFrom("sybil","getFluxDist")

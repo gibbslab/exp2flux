@@ -1,7 +1,9 @@
 #' @export plotDifferences
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co>
-#' @title Plot a bipartite graph.
-#' @description Plot a bipartite graph for each model to represent FBA flux changes between them.
+#' @title Plot the fold change of fluxes between two models into a bipartite graph.
+#' @description This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models and plot it into a bipartite graph.
+#' @param model1 A valid model for the \code{'sybil'} package.
+#' @param model2 A valid model for the \code{'sybil'} package. Must have the same reactions (reaction number and reaction identifiers) as \code{"model1"} with different restrictions.
 plotDifferences <- function(model1,model2,...){
   S <- as.matrix(t(model1@S))
   colnames(S) <- model1@met_id
@@ -34,6 +36,6 @@ plotDifferences <- function(model1,model2,...){
   vSizes <- types
   vSizes[types==1] <- (abs(fD$foldChange)/max(abs(fD$foldChange)))*20
   vSizes[types==0] <- 10
-  topology <- layout_with_gem(g)
+  layout <- layout.davidson.harel(g)
   plot.igraph(g,vertex.size=vSizes,vertex.label=names(types),edge.arrow.size=0.3)
   }
