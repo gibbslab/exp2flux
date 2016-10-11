@@ -10,6 +10,8 @@ plotDifferences(model1, model2, ...)
 \item{model1}{A valid model for the \code{'sybil'} package.}
 
 \item{model2}{A valid model for the \code{'sybil'} package. Must have the same reactions (reaction number and reaction identifiers) as \code{"model1"} with different restrictions.}
+
+\item{...}{Additional arguments affecting the plot}
 }
 \description{
 This functions calculates the fold change \code{"(fluxModel2/fluxModel1)-1"} for fluxes of two given metabolic models and plot it into a bipartite graph.
