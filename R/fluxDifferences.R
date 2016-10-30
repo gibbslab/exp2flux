@@ -34,17 +34,23 @@
 fluxDifferences <- function(model1,model2,foldReport=2){
   f_m1 <- getFluxDist(optimizeProb(model1))
   f_m2 <- getFluxDist(optimizeProb(model2))
-  if(identical(length(f_m1),length(f_m2))){
-    fold <- ((f_m2-f_m1)/f_m1)
-    fold[f_m1==0] <- f_m2[f_m1==0]
-    fold[is.na(fold)] <- 0
-    fold[is.infinite(fold)] <- 0
-    different <- (abs(fold)>=foldReport)
-    differentFlux <- matrix(cbind(f_m1,f_m2,fold),nrow = model1@react_num,dimnames = list(model1@react_id,c("fluxModel1","fluxModel2","foldChange")))
-    differentFlux <- differentFlux[different,]
-    return(differentFlux)
-  } 
-  else {
-    warning("Metabolic models must be the same with different restrictions")
-  }
-}
+  f_m1[f_m1==0] <- f_m2[f_m1==0]
+  fChange <- matrix(0,nrow = length(model1@react_id[model1@react_id%in%model2@react_id]),ncol = 3,dimnames = list(model1@react_id[model1@react_id%in%model2@react_id],c("fluxModel1","fluxModel2","foldChange")))
+  flux1 <- sapply(model1@react_id[model1@react_id%in%model2@react_id],function(ID){
+    f_m1[model1@react_id%in%ID]
+  },USE.NAMES = FALSE)
+  flux2 <- sapply(model1@react_id[model1@react_id%in%model2@react_id],function(ID){
+    f_m2[model2@react_id%in%ID]
+  },USE.NAMES = FALSE)
+  fold <- sapply(model1@react_id[model1@react_id%in%model2@react_id],function(ID){
+    (f_m2[model2@react_id%in%ID]-f_m1[model1@react_id%in%ID])/abs(f_m1[model1@react_id%in%ID])
+  },USE.NAMES = FALSE)
+  
+  fold[is.na(fold)] <- 0
+  fold[is.infinite(fold)] <- 0
+  fChange[,1] <- round(flux1,3)
+  fChange[,2] <- round(flux2,3)
+  fChange[,3] <- round(fold,3)
+  different <- (abs(fold)>=foldReport)
+  return(fChange[different,])
+} 
