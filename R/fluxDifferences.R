@@ -34,7 +34,6 @@
 fluxDifferences <- function(model1,model2,foldReport=2){
   f_m1 <- getFluxDist(optimizeProb(model1))
   f_m2 <- getFluxDist(optimizeProb(model2))
-  f_m1[f_m1==0] <- f_m2[f_m1==0]
   fChange <- matrix(0,nrow = length(model1@react_id[model1@react_id%in%model2@react_id]),ncol = 3,dimnames = list(model1@react_id[model1@react_id%in%model2@react_id],c("fluxModel1","fluxModel2","foldChange")))
   flux1 <- sapply(model1@react_id[model1@react_id%in%model2@react_id],function(ID){
     f_m1[model1@react_id%in%ID]
@@ -45,12 +44,16 @@ fluxDifferences <- function(model1,model2,foldReport=2){
   fold <- sapply(model1@react_id[model1@react_id%in%model2@react_id],function(ID){
     (f_m2[model2@react_id%in%ID]-f_m1[model1@react_id%in%ID])/abs(f_m1[model1@react_id%in%ID])
   },USE.NAMES = FALSE)
-  
+  for(ID in model1@react_id[model1@react_id%in%model2@react_id]){
+    if(f_m1[model1@react_id%in%ID] == 0){
+      fold[model1@react_id%in%ID] <- f_m2[model2@react_id%in%ID]
+    }
+  }
   fold[is.na(fold)] <- 0
   fold[is.infinite(fold)] <- 0
-  fChange[,1] <- round(flux1,3)
-  fChange[,2] <- round(flux2,3)
-  fChange[,3] <- round(fold,3)
+  fChange[,1] <- flux1
+  fChange[,2] <- flux2
+  fChange[,3] <- fold
   different <- (abs(fold)>=foldReport)
   return(fChange[different,])
 } 
