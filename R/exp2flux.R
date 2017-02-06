@@ -43,7 +43,9 @@
 #'                 }
 #' @keywords integrate expression data metabolic network genome scale reconstruction tissue-specific
 exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",scale=FALSE){
+  # If Organism and typeID is given
   if(!is.null(organism) && !is.null(typeID)){
+    # Download from KEGG database all pathway associations reported
     data <- try(kegg.gsets(species = organism, id.type = typeID)) 
     data <- matrix(gsub("[[:digit:]]+$","",names(unlist(data$kg.sets))),dimnames = list(as.vector(unlist(data$kg.sets)),c()))
   }
