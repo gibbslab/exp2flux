@@ -1,6 +1,8 @@
 exp2flux : convert gene EXPression data to FBA FLUXes
 ======
+
 The **exp2flux** package was designed as a tool to convert EXPression data to FBA FLUXes.
+
 Install:
 --------
 This package required R version 2.10 or higher. If you are using an older version of R you will be prompted to upgrade when you try to install the package.
