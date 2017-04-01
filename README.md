@@ -1,7 +1,7 @@
-exp2flux : convert gene EXPression data to FBA FLUXes
+exp2flux : convert gene EXPression data TO FBA FLUX bounds.
 ======
 
-The **exp2flux** package was designed as a tool to convert EXPression data to FBA FLUXes.
+The **exp2flux** package was designed as a tool to convert EXPression data TO FBA FLUX bounds.
 
 Install:
 --------
@@ -21,7 +21,7 @@ Available functions:
 -------------------
 |Function | Description |
 |:--------|:------------|
-|exp2flux|Convert Gene Expression Data to FBA fluxes|
+|exp2flux|Convert Gene Expression Data to FBA flux bounds|
 |fluxDifferences|Report the fold change of fluxes between two models|
 |plotDifferences|Plot the fold change of fluxes between two models into a bipartite graph|
 
