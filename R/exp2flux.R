@@ -2,14 +2,15 @@
 #' @importFrom "sybil" "findExchReact"
 #' @importFrom "gage" "kegg.gsets"
 #' @author Daniel Camilo Osorio <dcosorioh@unal.edu.co> and Kelly Botero <kjboteroo@unal.edu.co>
-#' @title Convert gene expression data to FBA fluxes
-#' @description This function calculates the flux boundaries for each reaction based in their associated GPR. 
-#' The value es obtained as follows: When two genes are associated by an \code{AND} operation according to the GPR rule, a \code{min} function is applied to their associated expression values. 
-#' In the \code{AND} case, downregulated genes alter the reaction acting as enzyme formation limitant due two are required to complex formation. 
-#' In turn, when the genes are associated by an \code{OR} rule, each one of then can code an entire enzyme to act as reaction catalyst. 
-#' In this case, a \code{sum} function is applied for their associated expression values.To missing gene expression values, the function assigns one of: \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'} expression value calculated from the genes associated to the same metabolic pathway.
+#' @title Convert gene expression data to FBA flux boundaries.
+#' @description Set the flux boundaries for each reaction based on the expression values of genes associated in their GPR rules.
+#' @details This function computes the flux boundaries for each reaction based in their associated GPR. 
+#' The value is obtained as follows: When two or more genes are associated by AND operators in the GPR rule, the minima value of their associated expression values is selected. 
+#' The AND operator indicates that all asociated genes are required to the enzymatic complex formation. In that case, the gene with the smaller expression value acts as the enzyme complex formation limitant. 
+#' In turn, when two or more genes are associated by OR operators in the GPR rule, the sum of all their associated expression values is computed. The OR operator indicates that each gene can code an entire isozyme to act as reaction catalyst. 
+#' To missing gene expression values, the function assigns one of: \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'} expression value computed from the genes associated to the same metabolic pathway. 
 #' In case of not possible pathway assignment to a gene, the value is calculated from all gene expression values. 
-#' The fluxes boundaries of exchange reactions are not modified.
+#' The flux boundaries of exchange reactions are not modified.
 #' @param model A valid model for the \code{'sybil'} package.
 #' @param expression A valid ExpressionSet object (one by treatment).
 #' @param organism  A valid organism identifier for the KEGG database. List of valid organism identifiers are available in: http://rest.kegg.jp/list/organism.
@@ -40,62 +41,57 @@
 #'                       missing = "mean")
 #' # Evaluating exp2flux model
 #' optimizeProb(Ec_coreGE)
-#'                 }
-#' @keywords integrate expression data metabolic network genome scale reconstruction tissue-specific
+#' }
+
 exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",scale=FALSE){
-  # If Organism and typeID is given
-  if(!is.null(organism) && !is.null(typeID)){
-    # Download from KEGG database all pathway associations reported
-    data <- try(kegg.gsets(species = organism, id.type = typeID)) 
-    data <- matrix(gsub("[[:digit:]]+$","",names(unlist(data$kg.sets))),dimnames = list(as.vector(unlist(data$kg.sets)),c()))
+  
+  # Download valid organisms from the KEGG database
+  keggDownload <- tempdir()
+  download.file("rest.kegg.jp/list/organism",paste0(keggDownload,"organism.txt"),quiet = TRUE)
+  keggOrganism <- as.vector(read.csv2(paste0(keggDownload,"organism.txt"),header = FALSE,sep ="\t")[,2])
+  
+  # Validate given organism
+  if(isTRUE(organism %in% keggOrganism) & is.null(organism)){
+    stop("Given organism is not included in the KEGG database")
   }
-  gpr.expression <- function(gpr,expression,missing){
-    gpr <- gsub("[()]","",gpr)
-    gpr <- gsub("[[:space:]]","",gpr)
-    complex <- lapply(gpr, function(gpr){unlist(strsplit(gpr,"or"))})
-    genes <- lapply(complex, function(complex){strsplit(complex,"and")})
-    genes[lengths(genes) == 0] <- NA
-    min.complex <- lapply(genes, function(gene){
-      lapply(gene, function(gene){
-        gene <- unlist(gene)
-        if(!is.null(organism) && !is.null(typeID)){
-        if(!all(gene%in%rownames(data))){
-          gene <- gene[gene%in%rownames(data)]
-        }} else {
-          gene <- gene[gene%in%rownames(expression@assayData$exprs)]
-        }
-        if (length(gene)==0){
-          minComplex <- 0
-        } else {
-          if(any(gene%in%rownames(expression@assayData$exprs))){
-            minComplex <- min(rowMeans(expression@assayData$exprs,na.rm = TRUE)[gene],na.rm = TRUE)
-          } else {
-            if(!is.null(organism) && !is.null(typeID)){
-              minComplex <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE)[names(data[data[,1]%in%names(sort(table(data[gene,]))[1]),])])[[match(missing,c("min","1q","median","mean","3q","max"))]]
-            } else {
-              minComplex <- 0
-            }
-          }
-        }
-        return(minComplex)
-      })
-    })
-    exp <- unlist(lapply(min.complex, function(min.complex){sum(unlist(min.complex),na.rm = TRUE)}))
-    exp[exp==0] <- summary(rowMeans(expression@assayData$exprs,na.rm = TRUE))[[match(missing,c("min","1q","median","mean","3q","max"))]]
-    return(exp)
+  
+  # Validate typeID
+  if(isTRUE(typeID %in% c("kegg","entrez")) & is.null(typeID)){
+    stop("Given typeID is not allowed")
   }
-  exp <- gpr.expression(gpr = model@gpr,
-                        expression = expression,
-                        missing=missing)
-  if(scale==TRUE){
-    exp <- round((exp/max(exp,na.rm = TRUE)),6)*1000
+  
+  # Download pathways for given organism
+  if(!is.null(organism) & !is.null(typeID)){
+    organismPathways <- downloadPathways(organism = organism, typeID = typeID)
+  } else {
+    organismPathways <- NULL
   }
+
+  # Expression Values for each GPR
+  expressionValues <- gprExpression(gpr = model@gpr, 
+                                    expression = expression,
+                                    organismPathways = organismPathways, 
+                                    missing = missing
+                                    )
+  
+  # Original boundaries
   lb <- model@lowbnd
   ub <- model@uppbnd
-  model@lowbnd <- -1*exp
+  
+  # Scale == TRUE
+  expressionValues <- round((expressionValues / max(expressionValues))*1000)
+  
+  # New boundaries
+  model@lowbnd <- -1 * expressionValues
+  model@uppbnd <- expressionValues
+  
+  # Setting 0 as lower boundary for irreversible reactions
   model@lowbnd[!model@react_rev] <- 0
-  model@uppbnd <- exp
+  
+  # Exchange reactions
   model@lowbnd[model@react_id%in%findExchReact(model)@react_id] <- lb[model@react_id%in%findExchReact(model)@react_id]
   model@uppbnd[model@react_id%in%findExchReact(model)@react_id] <- ub[model@react_id%in%findExchReact(model)@react_id]
+  
+  # Return
   return(model)
 }
