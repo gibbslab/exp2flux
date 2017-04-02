@@ -1,4 +1,4 @@
-gprExpression <- function(gpr,expression,missing){
+gprExpression <- function(gpr,expression,organismPathways,missing){
   # Split GPR
   gpr <- splitGPR(GPR = gpr)
   
