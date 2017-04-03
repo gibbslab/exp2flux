@@ -23,3 +23,32 @@ library(sybil)
 library(glpkAPI)
 ```
 
+```{r}
+data("Ec_core")
+Ec_core
+```
+
+```{r}
+sybil::optimizeProb(object = Ec_core)
+```
+
+```{r}
+data("antibioticsExpression")
+names(antibioticsExpression)
+```
+
+```{r}
+antibioticsExpression$`Untreated WT E coli cells at 60 min`
+```
+
+```{r}
+WTmodel <- exp2flux(model = Ec_core,
+                    expression = antibioticsExpression$`Untreated WT E coli cells at 60 min`)
+sybil::optimizeProb(WTmodel)
+```
+
+```{r}
+AMPmodel <- exp2flux(model = Ec_core, 
+                     expression = antibioticsExpression$`Amp treated WT E coli cells at 60 min`)
+sybil::optimizeProb(AMPmodel)
+```
