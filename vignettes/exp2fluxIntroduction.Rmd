@@ -1,0 +1,25 @@
+---
+title: "EXP2FLUX - Convert gene expression data to FBA flux boundaries"
+author: "Daniel Osorio, Kelly Botero, Janneth Gonzalez and Andres Pinzon"
+#date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Introduction to EXP2FLUX}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, dev = "png", fig.width = 7, fig.height = 5, message = FALSE, warning = FALSE)
+```
+### Introduction to EXP2FLUX
+
+```{r, eval = FALSE}
+install.packages("exp2flux")
+```
+
+```{r}
+library(exp2flux)
+library(sybil)
+library(glpkAPI)
+```
+

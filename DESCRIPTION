@@ -7,6 +7,9 @@ Description: For a given metabolic model with well formed Gene-Protein-Reaction 
 License: GPL (>=2)
 Imports: sybil,
          gage
-Suggests: Biobase
+Suggests: Biobase,
+    knitr,
+    rmarkdown
 LazyData: TRUE
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr
