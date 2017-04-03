@@ -47,7 +47,7 @@ exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",s
   
   # Download valid organisms from the KEGG database
   keggDownload <- tempdir()
-  download.file("rest.kegg.jp/list/organism",paste0(keggDownload,"organism.txt"),quiet = TRUE)
+  download.file("rest.kegg.jp/list/organism",paste0(keggDownload,"organism.txt"),quiet = TRUE, method = "curl")
   keggOrganism <- as.vector(read.csv2(paste0(keggDownload,"organism.txt"),header = FALSE,sep ="\t")[,2])
   
   # Validate given organism
@@ -79,7 +79,9 @@ exp2flux <- function(model,expression,organism=NULL,typeID=NULL,missing="mean",s
   ub <- model@uppbnd
   
   # Scale == TRUE
-  expressionValues <- round((expressionValues / max(expressionValues))*1000)
+  if(scale == TRUE){
+    expressionValues <- round((expressionValues / max(expressionValues))*1000)
+  }
   
   # New boundaries
   model@lowbnd <- -1 * expressionValues
