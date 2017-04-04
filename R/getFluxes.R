@@ -1,3 +1,4 @@
+#' @export getFluxes
 getFluxes <- function(model){
   reaction <- model@react_id
   fluxes <- getFluxDist(optimizeProb(model))
