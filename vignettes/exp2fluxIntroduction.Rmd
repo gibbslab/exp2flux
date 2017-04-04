@@ -9,7 +9,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE, dev = "png", fig.width = 7, fig.height = 5, message = FALSE, warning = FALSE)
+knitr::opts_chunk$set(collapse = TRUE, dev = "png",fig.width = 7.1, fig.height = 5, message = FALSE, warning = FALSE)
 ```
 ### Introduction to EXP2FLUX
 
@@ -21,6 +21,7 @@ install.packages("exp2flux")
 library(exp2flux)
 library(sybil)
 library(glpkAPI)
+library(ggplot2)
 ```
 
 ```{r}
@@ -43,12 +44,27 @@ antibioticsExpression$`Untreated WT E coli cells at 60 min`
 
 ```{r}
 WTmodel <- exp2flux(model = Ec_core,
-                    expression = antibioticsExpression$`Untreated WT E coli cells at 60 min`)
+                    expression = antibioticsExpression$`Untreated WT E coli cells at 60 min`,
+                    outputID = "WT")
 sybil::optimizeProb(WTmodel)
 ```
 
 ```{r}
 AMPmodel <- exp2flux(model = Ec_core, 
-                     expression = antibioticsExpression$`Amp treated WT E coli cells at 60 min`)
+                     expression = antibioticsExpression$`Amp treated WT E coli cells at 60 min`, 
+                     outputID = "AMP")
 sybil::optimizeProb(AMPmodel)
+```
+
+```{r}
+head(getFluxes(model = WTmodel), 5)
+head(getFluxes(model = AMPmodel), 5)
+```
+
+```{r}
+head(getDifferences(model1 = WTmodel, model2 = AMPmodel), 10)
+```
+
+```{r}
+plotDifferences(model1 = WTmodel, model2 = AMPmodel)
 ```
