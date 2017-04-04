@@ -4,7 +4,7 @@
 \alias{exp2flux}
 \title{Convert gene expression data to FBA flux boundaries.}
 \usage{
-exp2flux(model, expression, organism = NULL, typeID = NULL,
+exp2flux(model, expression, outputID, organism = NULL, typeID = NULL,
   missing = "mean", scale = FALSE)
 }
 \arguments{
@@ -24,12 +24,12 @@ exp2flux(model, expression, organism = NULL, typeID = NULL,
 Set the flux boundaries for each reaction based on the expression values of genes associated in their GPR rules.
 }
 \details{
-This function computes the flux boundaries for each reaction based in their associated GPR. 
-The value is obtained as follows: When two or more genes are associated by AND operators in the GPR rule, the minima value of their associated expression values is selected. 
-The AND operator indicates that all asociated genes are required to the enzymatic complex formation. In that case, the gene with the smaller expression value acts as the enzyme complex formation limitant. 
-In turn, when two or more genes are associated by OR operators in the GPR rule, the sum of all their associated expression values is computed. The OR operator indicates that each gene can code an entire isozyme to act as reaction catalyst. 
-To missing gene expression values, the function assigns one of: \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'} expression value computed from the genes associated to the same metabolic pathway. 
-In case of not possible pathway assignment to a gene, the value is calculated from all gene expression values. 
+This function computes the flux boundaries for each reaction based in their associated GPR.
+The value is obtained as follows: When two or more genes are associated by AND operators in the GPR rule, the minima value of their associated expression values is selected.
+The AND operator indicates that all asociated genes are required to the enzymatic complex formation. In that case, the gene with the smaller expression value acts as the enzyme complex formation limitant.
+In turn, when two or more genes are associated by OR operators in the GPR rule, the sum of all their associated expression values is computed. The OR operator indicates that each gene can code an entire isozyme to act as reaction catalyst.
+To missing gene expression values, the function assigns one of: \code{'min'}, \code{'1q'}, \code{'mean'}, \code{'median'}, \code{'3q'}, or \code{'max'} expression value computed from the genes associated to the same metabolic pathway.
+In case of not possible pathway assignment to a gene, the value is calculated from all gene expression values.
 The flux boundaries of exchange reactions are not modified.
 }
 \examples{
