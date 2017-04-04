@@ -1,3 +1,4 @@
+#' @export getDifferences
 getDifferences <- function(model1, model2, pLimit = 0.05) {
   # Getting fluxes by model
   fluxModel1 <- getFluxes(model1)
