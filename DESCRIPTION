@@ -1,6 +1,6 @@
 Package: exp2flux
 Type: Package
-Title: Convert Gene EXPression Data to FBA FLUXes
+Title: Convert gene expression data to FBA flux boundaries
 Version: 0.2
 Date: 2017-04-15
 Authors@R: c(person("Daniel","Osorio", email = "dcosorioh@unal.edu.co", role = c("aut","cre")), person("Kelly", "Botero", role = c("aut")), person("Janneth","Gonzalez", role = c("aut","ths")), person("Andres","Pinzon", role = c("aut","ths")))
