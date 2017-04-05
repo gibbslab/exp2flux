@@ -2,7 +2,8 @@ Package: exp2flux
 Type: Package
 Title: Convert Gene EXPression Data to FBA FLUXes
 Version: 0.2
-Authors@R: c(person("Daniel","Osorio", email = "dcosorioh@unal.edu.co", role = c("aut","cre")), person("Kelly", "Botero", role = c("aut")), person("Janneth","Gonzalez", role = c("aut")), person("Andres","Pinzon", role = c("aut")))
+Date: 2017-04-15
+Authors@R: c(person("Daniel","Osorio", email = "dcosorioh@unal.edu.co", role = c("aut","cre")), person("Kelly", "Botero", role = c("aut")), person("Janneth","Gonzalez", role = c("aut","ths")), person("Andres","Pinzon", role = c("aut","ths")))
 Description: For a given metabolic model with well formed Gene-Protein-Reaction (GPR) associations and an expressionSet with their associated gene expression values, this package converts gene expression values to the FBA boundaries for each reaction based in the boolean rules described in its associated GPR.
 License: GPL (>=2)
 Imports: sybil,
