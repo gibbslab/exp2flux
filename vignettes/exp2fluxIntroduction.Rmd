@@ -12,7 +12,9 @@ vignette: >
 knitr::opts_chunk$set(collapse = TRUE, dev = "png",fig.width = 7.1, fig.height = 5, message = FALSE, warning = FALSE)
 ```
 ### Introduction to EXP2FLUX
+Computational simulations of metabolism can help to predict the metabolic phenotype of an organism in response to different stimuli, through constraint-based modeling approaches. To recreate specific metabolic phenotypes and enhance the model predictive accuracy, several methods for the integration of transcriptomics data into constraint-based models have been proposed. The majority of available implemented methods are based on the discretization of data to incorporate constraints into the metabolic models via boolean logic representation, which reduces the accurate of physiological representations. The implemented methods for gene-expression data integration as continuous values are very few. The **exp2flux** package was designed as a tool to incorporate in a continuous way the gene-expression data as FBA flux limit in a metabolic model. Also, a function to calculate the differences between model fluxes in different metabolic scenarios was included. 
 
+The **exp2flux** is available through CRAN repositories, to install it just type:
 ```{r, eval = FALSE}
 install.packages("exp2flux")
 ```
